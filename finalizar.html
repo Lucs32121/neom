@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Compra confirmada | NEOM</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070a;--surface:#111114;--text:#f5f5f0;--muted:#a3a39b;--line:#26261f;
+  --accent:#e8ff1a;--ink:#0a0a0a;--glow:rgba(232,255,26,.42);--err:#ff7a7a;color-scheme:dark;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%}
+body{margin:0;min-height:100%;color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55;
+  background:radial-gradient(800px 480px at 85% -5%,var(--glow),transparent 60%),radial-gradient(600px 460px at -10% 55%,rgba(232,255,26,.09),transparent 60%),var(--bg);background-attachment:fixed}
+h1,h2,h3{font-family:"Space Grotesk",Inter,system-ui,sans-serif;line-height:1.12;margin:0;letter-spacing:-.02em}
+.wrap{max-width:680px;margin:0 auto;padding:0 20px}
+header{padding:22px 0 6px;text-align:center}
+.logo{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:28px;letter-spacing:.06em}
+.logo span{color:var(--accent);animation:flick 5s infinite}
+@keyframes flick{0%,18%,22%,62%,64%,100%{opacity:1;text-shadow:0 0 8px var(--accent),0 0 22px var(--accent)}20%,63%{opacity:.45;text-shadow:none}}
+.hero{text-align:center;padding:26px 0 8px}
+.check{width:72px;height:72px;margin:0 auto 18px;border-radius:50%;border:2px solid var(--accent);display:grid;place-items:center;color:var(--accent);box-shadow:0 0 22px var(--glow),inset 0 0 16px var(--glow)}
+.check svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px var(--accent))}
+h1{font-size:clamp(30px,6vw,44px)}
+h1 em{font-style:normal;color:var(--accent);text-shadow:0 0 10px var(--accent),0 0 34px var(--glow)}
+.lead{color:var(--muted);max-width:520px;margin:14px auto 0}
+.card{background:var(--surface);border:1px solid var(--accent);border-radius:24px;padding:28px 24px;margin:26px 0;box-shadow:0 0 0 1px rgba(232,255,26,.15),0 0 30px var(--glow)}
+.card h2{font-size:22px;margin-bottom:6px}
+.card>p{color:var(--muted);margin:0 0 20px;font-size:15px}
+label{display:block;font-weight:600;font-size:14px;margin:16px 0 6px}
+label small{font-weight:400;color:var(--muted)}
+.req{color:var(--accent)}
+input,select,textarea{width:100%;font:inherit;color:var(--text);background:#0b0b0e;border:1px solid var(--line);border-radius:12px;padding:13px 14px;transition:border-color .15s,box-shadow .15s}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--accent) 50%),linear-gradient(135deg,var(--accent) 50%,transparent 50%);background-position:calc(100% - 20px) 55%,calc(100% - 14px) 55%;background-size:6px 6px;background-repeat:no-repeat}
+textarea{min-height:96px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 16px var(--glow)}
+.bad{border-color:var(--err)!important;box-shadow:0 0 14px rgba(255,122,122,.35)!important}
+.err{color:var(--err);font-size:13px;margin-top:6px;min-height:18px}
+.btn{display:flex;width:100%;align-items:center;justify-content:center;margin-top:22px;padding:15px 26px;border-radius:999px;font:600 16px Inter,sans-serif;border:1px solid var(--accent);background:var(--accent);color:var(--ink);cursor:pointer;text-decoration:none;box-shadow:0 0 12px var(--accent),0 0 34px var(--glow);transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.fine{font-size:12.5px;color:var(--muted);margin:14px 0 0;text-align:center}
+.steps{list-style:none;counter-reset:s;padding:0;margin:0}
+.steps li{counter-increment:s;display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--line);font-size:15px}
+.steps li:first-child{border-top:0}
+.steps li::before{content:counter(s);flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--accent);color:var(--accent);display:grid;place-items:center;font-weight:700;font-size:14px;text-shadow:0 0 8px var(--accent)}
+.steps b{display:block}
+.steps span{color:var(--muted);font-size:14px}
+.done{display:none;text-align:center}
+.done p{color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 28px}
+</style>
+</head>
+<body>
+<header><div class="logo">NE<span>O</span>M</div></header>
+<main class="wrap">
+  <section class="hero">
+    <div class="check"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
+    <h1>Compra <em>confirmada!</em></h1>
+    <p class="lead">Obrigado pela confiança. Para começarmos o seu site, falta só um passo: preencher os dados abaixo.</p>
+  </section>
+
+  <div class="card" id="formcard">
+    <h2>Seus dados para começarmos</h2>
+    <p>O prazo de entrega começa a contar depois que recebermos essas informações.</p>
+    <form id="f" novalidate>
+      <label for="tel">Telefone com WhatsApp <span class="req">*</span></label>
+      <input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(00) 00000-0000" maxlength="15" required aria-describedby="telerr">
+      <div class="err" id="telerr" role="alert"></div>
+
+      <label for="nome">Seu nome <small>(opcional)</small></label>
+      <input id="nome" name="nome" type="text" autocomplete="name" placeholder="Como podemos te chamar?">
+
+      <label for="empresa">Nome da empresa ou marca <small>(opcional)</small></label>
+      <input id="empresa" name="empresa" type="text" placeholder="Ex.: Studio Bela">
+
+      <label for="plano">Plano que você comprou <small>(opcional)</small></label>
+      <select id="plano" name="plano">
+        <option value="">Selecione</option>
+        <option>Landing Page</option>
+        <option>Site Institucional</option>
+        <option>Site de Catálogo</option>
+      </select>
+
+      <label for="obs">O que o seu site precisa ter? <small>(opcional)</small></label>
+      <textarea id="obs" name="obs" placeholder="Conte o que você vende, para quem, cores e sites que você gosta..."></textarea>
+
+      <button class="btn" type="submit">Enviar pelo WhatsApp</button>
+      <p class="fine">Ao enviar, o WhatsApp abre com a mensagem pronta para você só confirmar.</p>
+    </form>
+  </div>
+
+  <div class="card done" id="done">
+    <div class="check"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
+    <h2>Quase lá!</h2>
+    <p>Abrimos o WhatsApp com a sua mensagem. Basta tocar em enviar. Se ele não abriu, use o botão abaixo.</p>
+    <a class="btn" id="wa" href="#" target="_blank" rel="noopener">Abrir o WhatsApp</a>
+  </div>
+
+  <div class="card">
+    <h2>O que acontece agora</h2>
+    <ol class="steps">
+      <li><div><b>Você envia os dados</b><span>Pelo formulário acima, em menos de 2 minutos.</span></div></li>
+      <li><div><b>Entramos em contato</b><span>Falamos com você pelo WhatsApp para alinhar os detalhes.</span></div></li>
+      <li><div><b>Criamos e você aprova</b><span>Mostramos o resultado e fazemos os ajustes combinados.</span></div></li>
+      <li><div><b>Seu site vai ao ar</b><span>Publicamos e ajudamos com o domínio.</span></div></li>
+    </ol>
+  </div>
+</main>
+<footer>© 2026 NEOM. Todos os direitos reservados.</footer>
+<script>
+(function(){
+  var f=document.getElementById("f"),tel=document.getElementById("tel"),err=document.getElementById("telerr");
+  function mask(v){
+    var d=v.replace(/\D/g,"");
+    if(d.indexOf("55")===0&&d.length>11)d=d.slice(2);
+    d=d.slice(0,11);
+    if(d.length>6)return "("+d.slice(0,2)+") "+d.slice(2,d.length>10?7:6)+"-"+d.slice(d.length>10?7:6);
+    if(d.length>2)return "("+d.slice(0,2)+") "+d.slice(2);
+    return d?"("+d:"";
+  }
+  function valid(v){
+    var d=v.replace(/\D/g,"");
+    if(d.length!==10&&d.length!==11)return false;
+    if(+d.slice(0,2)<11)return false;
+    if(d.length===11&&d.charAt(2)!=="9")return false;
+    return true;
+  }
+  tel.addEventListener("input",function(){tel.value=mask(tel.value);tel.classList.remove("bad");err.textContent=""});
+  f.addEventListener("submit",function(e){
+    e.preventDefault();
+    if(!valid(tel.value)){
+      tel.classList.add("bad");
+      err.textContent=tel.value.trim()?"Digite um telefone válido com DDD, por exemplo (83) 99999-9999.":"O telefone é obrigatório para continuarmos.";
+      tel.focus();return;
+    }
+    var g=function(id){return document.getElementById(id).value.trim()};
+    var m="Olá! Acabei de comprar"+(g("plano")?" o plano "+g("plano"):" um site")+" na NEOM.\n";
+    if(g("nome"))m+="Nome: "+g("nome")+"\n";
+    if(g("empresa"))m+="Empresa: "+g("empresa")+"\n";
+    m+="Telefone: "+tel.value+"\n";
+    if(g("obs"))m+="O que o site precisa ter: "+g("obs");
+    var url="https://wa.me/5583994054176?text="+encodeURIComponent(m);
+    document.getElementById("wa").href=url;
+    document.getElementById("formcard").style.display="none";
+    var dn=document.getElementById("done");dn.style.display="block";dn.scrollIntoView({behavior:"smooth",block:"center"});
+    window.location.href=url;
+  });
+})();
+</script>
+</body>
+</html>
