@@ -175,7 +175,7 @@ body.is-404 #erro-404{display:grid}
 <header>
   <div class="wrap nav">
     <a class="logo" href="#">NE<span>O</span>M</a>
-    <nav class="links"><a href="#planos">Planos</a><a href="#quiz">Quiz</a><a href="#como-funciona">Como funciona</a><a href="#duvidas">Dúvidas</a></nav>
+    <nav class="links"><a href="#planos">Planos</a><a href="quiz.html">Quiz</a><a href="#como-funciona">Como funciona</a><a href="#duvidas">Dúvidas</a></nav>
     <a class="btn btn-primary" href="#planos">Quero meu site</a>
   </div>
 </header>
@@ -186,10 +186,9 @@ body.is-404 #erro-404{display:grid}
     <div>
       <h1>Seu negócio merece um site que <em>brilha.</em></h1>
       <p class="lead">Escolha o tipo de site ideal e tenha uma presença digital moderna, rápida e feita para transformar visitantes em clientes.</p>
-      <div class="cta"><a class="btn btn-primary" href="#planos">Ver planos</a><a class="btn btn-ghost" href="#quiz">Qual o tipo de site ideal para mim?</a><a class="btn btn-ghost" href="#como-funciona">Como funciona</a></div>
+      <div class="cta"><a class="btn btn-primary" href="#planos">Ver planos</a><a class="btn btn-ghost" href="quiz.html">Qual o tipo de site ideal para mim?</a><a class="btn btn-ghost" href="#como-funciona">Como funciona</a></div>
       <div class="stats">
         <div><b>4 a 16 horas</b><span>entrega mais rápida</span></div>
-        <div><b>4.9★</b><span>avaliação média</span></div>
       </div>
     </div>
     <div class="laptop" role="img" aria-label="Notebook com contorno neon amarelo exibindo um site moderno">
@@ -269,17 +268,6 @@ body.is-404 #erro-404{display:grid}
   </div>
 </section>
 
-<section id="quiz">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Quiz rápido</span>
-      <h2>Descubra o site ideal para o seu negócio</h2>
-      <p>Responda 5 perguntas e veja qual plano combina com você.</p>
-    </div>
-    <div class="quiz-card" id="quiz-box"></div>
-  </div>
-</section>
-
 <section id="como-funciona">
   <div class="wrap">
     <div class="sec-head"><h2>Do zero ao ar em 4 passos</h2></div>
@@ -339,58 +327,6 @@ body.is-404 #erro-404{display:grid}
   }
   addEventListener("hashchange",route);
   route();
-})();
-</script>
-<script>
-(function(){
-  var Q=[
-    {q:"Qual é o seu principal objetivo com o site?",o:[["Vender um produto ou serviço específico","l"],["Apresentar minha empresa e passar credibilidade","i"],["Mostrar vários produtos para os clientes escolherem","c"]]},
-    {q:"Quantos produtos ou serviços você quer divulgar?",o:[["Só um, o principal","l"],["Alguns serviços ou soluções","i"],["Muitos produtos (mais de 10)","c"]]},
-    {q:"Como o cliente vai falar com você ou comprar?",o:[["Clicando em um botão de WhatsApp ou preenchendo um formulário","l"],["Pelo formulário, telefone ou mapa da empresa","i"],["Escolhendo produtos e pedindo pelo WhatsApp","c"]]},
-    {q:"Quantas páginas você imagina para o site?",o:[["Uma só, direta ao ponto","l"],["De 3 a 6: início, sobre, serviços e contato","i"],["Várias: categorias, busca e página de cada produto","c"]]},
-    {q:"Com que frequência você vai atualizar o conteúdo?",o:[["Quase nunca, é uma campanha pontual","l"],["De vez em quando, com novidades ou blog","i"],["Sempre: novos produtos e preços","c"]]}
-  ];
-  var P={
-    l:{n:"Landing Page",p:"R$227,79",u:"https://pay.kiwify.com.br/33Eo46c",d:"Uma página única e focada em conversão, ideal para vender uma oferta específica."},
-    i:{n:"Site Institucional",p:"R$448,89",u:"https://pay.kiwify.com.br/4EFHuvu",d:"Um site completo com até 6 páginas, para apresentar sua marca e ser encontrado no Google."},
-    c:{n:"Site de Catálogo",p:"R$1.227,79",u:"https://pay.kiwify.com.br/cTDUkET",d:"Um catálogo com categorias, busca e página por produto, com pedidos pelo WhatsApp."}
-  };
-  var box=document.getElementById("quiz-box"),step=0,ans=[];
-  if(!box)return;
-  function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x)e.textContent=x;return e}
-  function render(){
-    box.textContent="";
-    if(step>=Q.length)return result();
-    var bar=el("div","qbar"),fill=el("i");
-    fill.style.width=(step/Q.length*100)+"%";bar.appendChild(fill);box.appendChild(bar);
-    box.appendChild(el("div","qstep","Pergunta "+(step+1)+" de "+Q.length));
-    box.appendChild(el("h3","",Q[step].q));
-    Q[step].o.forEach(function(o){
-      var b=el("button","qopt",o[0]);b.type="button";
-      b.onclick=function(){ans[step]=o;step++;render()};
-      box.appendChild(b);
-    });
-    if(step>0){var k=el("button","qback","← Voltar");k.type="button";k.onclick=function(){step--;render()};box.appendChild(k)}
-  }
-  function result(){
-    var s={l:0,i:0,c:0};
-    ans.forEach(function(a){s[a[1]]++});
-    var max=Math.max(s.l,s.i,s.c),top=["i","l","c"].filter(function(k){return s[k]===max});
-    var key=top.length===1?top[0]:(top.indexOf(ans[0][1])>-1?ans[0][1]:top[0]);
-    var p=P[key],r=el("div","qres");
-    r.appendChild(el("div","qstep","O site ideal para você é"));
-    r.appendChild(el("div","nm",p.n));
-    r.appendChild(el("div","pr","a partir de "+p.p));
-    r.appendChild(el("p","",p.d));
-    var cta=el("div","cta");
-    var a=el("a","btn btn-primary","Quero esse plano");a.href=p.u;cta.appendChild(a);
-    var msg="Olá! Fiz o quiz da NEOM e o resultado foi: "+p.n+".\n"+ans.map(function(x,i){return (i+1)+") "+x[0]}).join("\n");
-    var w=el("a","btn btn-ghost","Tirar dúvidas no WhatsApp");w.href="https://wa.me/5583994054176?text="+encodeURIComponent(msg);cta.appendChild(w);
-    r.appendChild(cta);
-    var again=el("button","qback","Refazer o quiz");again.type="button";again.onclick=function(){step=0;ans=[];render()};
-    r.appendChild(again);box.appendChild(r);
-  }
-  render();
 })();
 </script>
 </body>
