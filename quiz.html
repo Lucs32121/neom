@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NEOM | Descubra o site ideal para o seu negócio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070a;--surface:#111114;--text:#f5f5f0;--muted:#a3a39b;--line:#26261f;
+  --accent:#e8ff1a;--ink:#0a0a0a;--glow:rgba(232,255,26,.42);color-scheme:dark;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%}
+body{margin:0;min-height:100%;color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55;
+  background:radial-gradient(800px 480px at 85% -5%,var(--glow),transparent 60%),radial-gradient(600px 460px at -10% 55%,rgba(232,255,26,.09),transparent 60%),var(--bg);background-attachment:fixed}
+h1,h2,h3{font-family:"Space Grotesk",Inter,system-ui,sans-serif;line-height:1.12;margin:0;letter-spacing:-.02em}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+header{padding:22px 0 8px;text-align:center}
+.logo{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:28px;letter-spacing:.06em}
+.logo span{color:var(--accent);animation:flick 5s infinite}
+@keyframes flick{0%,18%,22%,62%,64%,100%{opacity:1;text-shadow:0 0 8px var(--accent),0 0 22px var(--accent)}20%,63%{opacity:.45;text-shadow:none}}
+.card{background:var(--surface);border:1px solid var(--accent);border-radius:24px;padding:32px 26px;margin:18px 0 40px;box-shadow:0 0 0 1px rgba(232,255,26,.15),0 0 30px var(--glow)}
+.eyebrow{display:inline-block;font-size:13px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.14em;margin-bottom:10px;text-shadow:0 0 12px var(--accent)}
+h1{font-size:clamp(30px,6vw,44px)}
+h1 em{font-style:normal;color:var(--accent);text-shadow:0 0 10px var(--accent),0 0 34px var(--glow)}
+.lead{color:var(--muted);margin:14px 0 24px}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 26px;border-radius:999px;font:600 15px Inter,sans-serif;border:1px solid var(--line);color:var(--text);background:transparent;cursor:pointer;text-decoration:none;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-p{background:var(--accent);color:var(--ink);border-color:var(--accent);box-shadow:0 0 12px var(--accent),0 0 34px var(--glow)}
+.btn-g:hover{border-color:var(--accent);box-shadow:0 0 16px var(--glow)}
+.meta{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:20px}
+.bar{height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:20px}
+.bar i{display:block;height:100%;background:var(--accent);box-shadow:0 0 12px var(--accent);transition:width .3s}
+.step{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:10px}
+.step b{color:var(--accent);font-weight:600}
+h2{font-size:clamp(21px,3.6vw,28px);margin-bottom:20px}
+.opt{display:block;width:100%;text-align:left;font:inherit;color:var(--text);background:transparent;border:1px solid var(--line);border-radius:14px;padding:15px 18px;margin-bottom:10px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.opt:hover,.opt:focus-visible{border-color:var(--accent);box-shadow:0 0 16px var(--glow);outline:none}
+.back{background:none;border:0;color:var(--muted);font:inherit;cursor:pointer;padding:6px 0;margin-top:4px}
+.back:hover{color:var(--accent)}
+.res{text-align:center}
+.nm{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(34px,7vw,52px);color:var(--accent);text-shadow:0 0 12px var(--accent),0 0 40px var(--glow);margin:6px 0 2px}
+.price{font-size:20px;font-weight:600}
+.res>p{color:var(--muted);max-width:520px;margin:12px auto 22px}
+.feats{list-style:none;padding:0;margin:0 auto 24px;max-width:420px;text-align:left}
+.feats li{display:flex;gap:10px;padding:5px 0;font-size:15px}
+.feats li::before{content:"✓";color:var(--accent);font-weight:700}
+.scores{text-align:left;margin:0 auto 26px;max-width:460px}
+.sc{margin-bottom:12px;font-size:14px}
+.sc div{display:flex;justify-content:space-between;margin-bottom:5px;color:var(--muted)}
+.sc .t{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.sc .t i{display:block;height:100%;background:#6b6b5c;border-radius:99px}
+.sc.top .t i{background:var(--accent);box-shadow:0 0 12px var(--accent)}
+.sc.top div{color:var(--text);font-weight:600}
+.note{font-size:14px;color:var(--muted);max-width:480px;margin:0 auto 22px;padding:12px 16px;border:1px dashed var(--line);border-radius:12px}
+.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:0 0 28px}
+</style>
+</head>
+<body>
+<header><div class="logo">NE<span>O</span>M</div></header>
+<main class="wrap"><div class="card" id="app"></div></main>
+<footer>© 2026 NEOM. Todos os direitos reservados.</footer>
+<script>
+(function(){
+  var Q=[
+    ["Qual é o principal objetivo do seu site?","Vender uma única oferta agora","Captar contatos de interessados","Apresentar minha empresa e passar credibilidade","Divulgar meus serviços e produtos principais","Mostrar um catálogo completo de produtos"],
+    ["Em que fase está o seu negócio?","Vou lançar um produto ou serviço novo","Quero impulsionar uma campanha ou promoção","Tenho empresa e preciso de presença profissional","Já tenho clientes e quero crescer online","Já vendo vários produtos e quero uma vitrine online"],
+    ["De onde vêm (ou virão) seus clientes?","De anúncios pagos (Instagram, Facebook, Google)","De anúncios e indicações","De buscas no Google","Do Google e das redes sociais","Do Instagram e do WhatsApp, com catálogo"],
+    ["Quantos produtos ou serviços você quer divulgar?","Apenas um","Até 3","De 4 a 6","De 7 a 10","Mais de 10"],
+    ["Como o seu cliente decide a compra?","Pela oferta, na hora","Pela oferta e por alguns detalhes","Conhecendo a empresa e a sua experiência","Conhecendo a empresa e os produtos","Comparando produtos, preços e variações"],
+    ["Quanto detalhe você quer mostrar de cada item?","Uma mensagem única e direta","Poucas informações, bem resumidas","Descrição dos serviços e da equipe","Descrição e algumas fotos dos produtos","Foto, descrição e preço de cada produto"],
+    ["Quantas páginas você imagina?","Uma só","Uma página longa com várias seções","De 3 a 6 páginas","Várias, com produtos em destaque","Muitas, com categorias e uma página por produto"],
+    ["Você precisa de blog e de aparecer no Google?","Não preciso","Não, o foco é quem já chega por anúncio","Quero blog e boa posição no Google","Quero aparecer no Google e listar produtos","Preciso de busca interna e filtros de produtos"],
+    ["Como o cliente vai entrar em contato?","Por um botão de WhatsApp","Por WhatsApp ou formulário simples","Por formulário, telefone e mapa da empresa","Por formulário e pedidos pelo WhatsApp","Escolhendo produtos e pedindo pelo WhatsApp"],
+    ["Capturar contatos de interessados é importante?","É o foco principal","Muito importante","Importante, mas não o principal","Pouco importante","Não, quero receber pedidos"],
+    ["Com que frequência o conteúdo vai mudar?","Nunca, é uma campanha pontual","Raramente","De vez em quando","Com frequência","Sempre: novos produtos e preços"],
+    ["Quem vai atualizar o site?","Ninguém, peço ajustes se precisar","Peço ao suporte raramente","Peço ao suporte de vez em quando","Quero editar algumas coisas sozinho","Quero um painel para editar tudo sozinho"],
+    ["Qual identidade você quer transmitir?","Impacto e clareza em uma mensagem","Um visual simples e direto","Marca forte, com design exclusivo","Marca forte e produtos bem apresentados","Organização e fotos de alta qualidade"],
+    ["Qual é a sua urgência?","O mais rápido possível, em poucas horas","Preciso rápido","Posso esperar algumas horas","Posso esperar um pouco mais","Prefiro o site mais completo, mesmo que demore mais"],
+    ["Qual investimento combina com você agora?","O menor investimento possível","Um investimento baixo","Um valor médio, com bom custo-benefício","Um investimento médio a alto","Investir mais em um site completo para vender"]
+  ];
+  var P={
+    l:{n:"Landing Page",p:"R$227,79",u:"https://pay.kiwify.com.br/33Eo46c",d:"Você precisa de foco e velocidade: uma página única, pensada para converter quem chega por anúncios e redes sociais.",f:["Página única focada em conversão","Copy estratégica de vendas","Botão direto para WhatsApp","Formulário de captura de leads","Entrega em cerca de 4 horas"]},
+    i:{n:"Site Institucional",p:"R$448,89",u:"https://pay.kiwify.com.br/4EFHuvu",d:"Você precisa passar credibilidade e ser encontrado: um site completo, com a cara da sua marca e preparado para o Google.",f:["Até 6 páginas (Home, Sobre, Serviços...)","Design exclusivo da sua marca","Blog para conteúdo e SEO","Formulário de contato e mapa","Entrega em 8 a 12 horas"]},
+    c:{n:"Site de Catálogo",p:"R$1.227,79",u:"https://pay.kiwify.com.br/cTDUkET",d:"Você precisa exibir muitos produtos e facilitar o pedido: um catálogo com busca, categorias e painel para você mesmo atualizar.",f:["Catálogo com categorias e filtros","Página individual por produto","Pedido direto pelo WhatsApp","Painel para editar produtos","Entrega em cerca de 16 horas"]}
+  };
+  var app=document.getElementById("app"),step=-1,ans=[];
+  function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!==undefined)e.textContent=x;return e}
+  function intro(){
+    app.textContent="";
+    app.appendChild(el("span","eyebrow","Quiz completo"));
+    var h=el("h1");h.appendChild(document.createTextNode("Qual é o site ideal para o seu "));h.appendChild(el("em","","negócio?"));app.appendChild(h);
+    app.appendChild(el("p","lead","Responda 15 perguntas rápidas sobre o seu objetivo, seus produtos e a sua rotina. No final, indicamos o plano certo e levamos você direto para a compra."));
+    var b=el("button","btn btn-p","Começar o quiz");b.type="button";b.onclick=function(){step=0;ans=[];render()};app.appendChild(b);
+    var m=el("div","meta");["⏱ Cerca de 3 minutos","15 perguntas","Sem cadastro"].forEach(function(t){m.appendChild(el("span","",t))});app.appendChild(m);
+  }
+  function render(){
+    if(step<0)return intro();
+    if(step>=Q.length)return result();
+    app.textContent="";
+    var bar=el("div","bar"),f=el("i");f.style.width=(step/Q.length*100)+"%";bar.appendChild(f);app.appendChild(bar);
+    var s=el("div","step");s.appendChild(el("span","","Pergunta "+(step+1)+" de "+Q.length));s.appendChild(el("b","",Math.round(step/Q.length*100)+"%"));app.appendChild(s);
+    app.appendChild(el("h2","",Q[step][0]));
+    for(var i=1;i<Q[step].length;i++){(function(o,n){
+      var b=el("button","opt",o);b.type="button";b.onclick=function(){ans[step]=[o,n];step++;render();window.scrollTo(0,0)};app.appendChild(b)
+    })(Q[step][i],i-1)}
+    var k=el("button","back",step>0?"← Voltar":"← Início");k.type="button";k.onclick=function(){step--;render()};app.appendChild(k);
+  }
+  function result(){
+    var W=[[2,0,0],[1,1,0],[0,2,0],[0,1,1],[0,0,2]],s={l:0,i:0,c:0};ans.forEach(function(a){s.l+=W[a[1]][0];s.i+=W[a[1]][1];s.c+=W[a[1]][2]});
+    var max=Math.max(s.l,s.i,s.c),tied=["i","l","c"].filter(function(k){return s[k]===max});
+    var lean=ans[0][1]<2?"l":(ans[0][1]>2?"c":"i"),key=tied.length===1?tied[0]:(tied.indexOf(lean)>-1?lean:tied[0]);
+    var p=P[key],r=el("div","res");app.textContent="";
+    r.appendChild(el("span","eyebrow","Seu resultado"));
+    r.appendChild(el("div","nm",p.n));
+    r.appendChild(el("div","price","a partir de "+p.p));
+    r.appendChild(el("p","",p.d));
+    var ul=el("ul","feats");p.f.forEach(function(t){ul.appendChild(el("li","",t))});r.appendChild(ul);
+    var sc=el("div","scores");
+    ["l","i","c"].forEach(function(k){
+      var pc=Math.round(s[k]/(Q.length*2)*100),w=el("div","sc"+(k===key?" top":""));
+      var row=el("div");row.appendChild(el("span","",P[k].n));row.appendChild(el("span","",pc+"%"));w.appendChild(row);
+      var t=el("div","t"),i=el("i");i.style.width=pc+"%";t.appendChild(i);w.appendChild(t);sc.appendChild(w)
+    });
+    r.appendChild(sc);
+    var others=["l","i","c"].filter(function(k){return k!==key&&s[k]>=max-4});
+    if(others.length){r.appendChild(el("p","note","Suas respostas também combinam com o plano "+others.map(function(k){return P[k].n}).join(" e ")+". Se tiver dúvida, fale com a gente no WhatsApp."))}
+    var cta=el("div","cta");
+    var a=el("a","btn btn-p","Quero este plano");a.href=p.u;cta.appendChild(a);
+    var msg="Olá! Quero saber mais sobre os sites.";
+    var w=el("a","btn btn-g","Tirar dúvidas no WhatsApp");w.href="https://wa.me/5583994054176?text="+encodeURIComponent(msg);cta.appendChild(w);
+    r.appendChild(cta);
+    var again=el("button","back","Refazer o quiz");again.type="button";again.onclick=function(){step=-1;ans=[];render()};r.appendChild(again);
+    app.appendChild(r);window.scrollTo(0,0);
+  }
+  render();
+})();
+</script>
+</body>
+</html>
