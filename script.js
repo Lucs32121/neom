@@ -36,10 +36,6 @@ const PLANOS = {
 const params = new URLSearchParams(location.search);
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const FINE = matchMedia("(hover: hover) and (pointer: fine)").matches;
-// celular: os planos viram uma rolagem horizontal nativa (mais confiável no iPhone)
-const SWIPE_MQ = matchMedia("(max-width: 699px)");
-const SWIPE = SWIPE_MQ.matches;
-SWIPE_MQ.addEventListener("change", () => location.reload());
 const fmt = (n) => n.toLocaleString("pt-BR");
 document.documentElement.classList.add("js");
 
@@ -272,10 +268,10 @@ document.addEventListener("click", (e) => {
 });
 addEventListener("pageshow", () => document.body.classList.remove("leaving"));
 
-/* ---------- Cilindro de planos: a rolagem vertical gira os cards na horizontal ---------- */
+/* ---------- Cilindro de planos: um cilindro de verdade, com as faces coladas pela borda, que gira com a rolagem ---------- */
 {
   const sec = document.getElementById("cyl");
-  if (sec && !REDUCED && !SWIPE) {
+  if (sec && !REDUCED) {
     const sticky = sec.querySelector(".cyl-sticky");
     const stage = sec.querySelector(".cyl-stage");
     const cyl = sec.querySelector(".cyl");
@@ -284,28 +280,41 @@ addEventListener("pageshow", () => document.body.classList.remove("leaving"));
     const ui = sec.querySelector(".cyl-ui");
     const nav = document.querySelector(".nav");
     const N = items.length;
-    let STEP = 40;
-    let cw = 340, R = 544, target = 0, cur = 0;
+    const STEP = 360 / N; // ângulo entre faces (120° para 3 planos)
+    let cw = 340, ap = 100, rc = 200, target = 0, cur = 0;
     sec.classList.add("cyl-on");
+
+    // anéis neon no topo e na base: ligam as faces e giram junto, mostrando o movimento do cilindro
+    const aneis = [0, 1].map(() => {
+      const r = document.createElement("div");
+      r.className = "cyl-ring";
+      r.setAttribute("aria-hidden", "true");
+      cyl.appendChild(r);
+      return r;
+    });
 
     const measure = () => {
       cw = Math.min(340, innerWidth * 0.78);
-      // em celular, o cilindro fica mais "fechado" para os vizinhos continuarem visíveis
-      const estreito = innerWidth < 700;
-      STEP = estreito ? 28 : 40;
-      R = cw * (estreito ? 1.25 : 1.6);
+      ap = cw / (2 * Math.tan(Math.PI / N));   // apótema: distância do eixo até o centro de cada face
+      rc = ap / Math.cos(Math.PI / N);         // raio até as quinas, onde os anéis passam
       cyl.style.setProperty("--cw", cw + "px");
       cyl.style.setProperty("--ch", "auto");
       cyl.style.setProperty("--fit", 1);
       const ch = Math.max(...items.map((i) => i.offsetHeight));
       cyl.style.setProperty("--ch", ch + "px");
-      const livre = sticky.clientHeight - ui.offsetHeight - 70;
+      const livre = sticky.clientHeight - ui.offsetHeight - 110;
       cyl.style.setProperty("--fit", Math.min(1, livre / ch));
+      aneis.forEach((r, k) => {
+        const yc = k === 0 ? -24 : ch + 24;
+        r.style.width = r.style.height = 2 * rc + "px";
+        r.style.left = (cw - 2 * rc) / 2 + "px";
+        r.style.top = yc - rc + "px";
+      });
     };
 
     const faixa = () => sec.offsetHeight - sticky.offsetHeight;
     const topo = () => scrollY + sec.getBoundingClientRect().top - nav.offsetHeight; // scrollY em que o cilindro começa a girar
-    const ease = (f) => (f < 0.3 ? 0 : f > 0.7 ? 1 : ((s) => s * s * (3 - 2 * s))((f - 0.3) / 0.4)); // pausa em cada plano
+    const ease = (f) => (f < 0.3 ? 0 : f > 0.7 ? 1 : ((s) => s * s * (3 - 2 * s))((f - 0.3) / 0.4)); // pausa em cada face
 
     const update = () => {
       const p = Math.max(0, Math.min(1, (scrollY - topo()) / faixa()));
@@ -320,16 +329,17 @@ addEventListener("pageshow", () => document.body.classList.remove("leaving"));
     const render = () => {
       cur += (target - cur) * 0.11;
       if (Math.abs(target - cur) < 0.001) cur = target;
-      // cada plano fica na sua posição do cilindro; o z-index garante que o da frente cubra os outros
       items.forEach((it, i) => {
-        const delta = i - cur;
-        const th = (delta * STEP * Math.PI) / 180;
-        const x = R * Math.sin(th), z = R * (Math.cos(th) - 1);
-        const d = Math.min(Math.abs(delta), 1);
-        it.style.transform = `translate3d(${x.toFixed(1)}px, 0, ${z.toFixed(1)}px) rotateY(${(-delta * STEP).toFixed(2)}deg)`;
-        it.style.zIndex = 100 - Math.round(d * 100);
-        it.style.opacity = 1 - d * 0.62;
-        it.style.pointerEvents = d < 0.5 ? "auto" : "none";
+        // ângulo desta face em relação à frente, normalizado para (-180, 180]
+        const phi = ((((i - cur) * STEP + 180) % 360) + 360) % 360 - 180;
+        const c = Math.cos((phi * Math.PI) / 180);
+        // gira em torno do eixo do cilindro: afasta do eixo, gira, e traz o eixo de volta
+        it.style.transform = `translateZ(${-ap.toFixed(1)}px) rotateY(${phi.toFixed(2)}deg) translateZ(${ap.toFixed(1)}px)`;
+        it.style.opacity = (0.3 + 0.7 * Math.max(0, c)).toFixed(2);
+        it.style.pointerEvents = c > 0.85 ? "auto" : "none";
+      });
+      aneis.forEach((r) => {
+        r.style.transform = `translateZ(${-ap.toFixed(1)}px) rotateX(90deg) rotateZ(${(-cur * STEP).toFixed(2)}deg)`;
       });
       const ativo = Math.round(cur);
       dots.forEach((d, i) => d.classList.toggle("on", i === ativo));
@@ -373,10 +383,6 @@ addEventListener("pageshow", () => document.body.classList.remove("leaving"));
     stage.addEventListener("click", (e) => { if (arrastou) { e.preventDefault(); e.stopPropagation(); arrastou = false; } }, true);
   }
 }
-
-/* ============================================================
-   FUNCIONALIDADES
-   ============================================================ */
 
 /* ---------- Botão "Fale conosco": abre direto o WhatsApp ---------- */
 document.querySelectorAll("a[data-whats]").forEach((a) => {
@@ -580,44 +586,52 @@ if (form) {
   });
 }
 
-/* ---------- Planos no celular: rolagem horizontal nativa com profundidade ---------- */
+/* ---------- Como funciona (computador): cards grandes cruzando a tela na diagonal ao rolar ---------- */
 {
-  const sec = document.getElementById("cyl");
-  if (sec && SWIPE) {
-    const sc = sec.querySelector(".cyl");
-    const items = [...sec.querySelectorAll(".cyl-item")];
-    const dots = [...sec.querySelectorAll(".cyl-dot")];
-    let atual = 0, pendente = false;
+  const box = document.getElementById("diag");
+  if (box && !REDUCED && matchMedia("(min-width: 900px)").matches) {
+    const sticky = box.querySelector(".diag-sticky");
+    const cards = [...box.querySelectorAll(".diag-card")];
+    const linha = box.querySelector(".diag-line");
+    const num = box.querySelector(".diag-count b");
+    const nav = document.querySelector(".nav");
+    const N = cards.length, G = 1; // G = distância (em "passos") entre um card e o próximo
+    let Dx = 480, Dy = 300;
+    box.classList.add("diag-on");
 
-    const ir = (i) => {
-      const it = items[Math.max(0, Math.min(items.length - 1, i))];
-      sc.scrollTo({ left: it.offsetLeft - (sc.clientWidth - it.offsetWidth) / 2, behavior: REDUCED ? "auto" : "smooth" });
+    const measure = () => {
+      const dw = Math.min(560, innerWidth * 0.42);
+      box.style.setProperty("--dw", dw + "px");
+      box.style.setProperty("--dh", "auto");
+      const dh = Math.max(...cards.map((c) => c.offsetHeight));
+      box.style.setProperty("--dh", dh + "px");
+      Dx = dw * 0.92; Dy = dh * 0.88; // deslocamento por passo: define a diagonal
+      linha.style.transform = `translate(-50%, -50%) rotate(${(Math.atan2(Dy, Dx) * 180 / Math.PI).toFixed(2)}deg)`;
     };
 
-    // cards do centro ficam nítidos e de frente; os das laterais giram e esmaecem
+    const topo = () => scrollY + box.getBoundingClientRect().top - nav.offsetHeight;
     const update = () => {
-      pendente = false;
-      const cx = sc.getBoundingClientRect().left + sc.clientWidth / 2;
-      let melhor = 0, menor = Infinity;
-      items.forEach((it, i) => {
-        const r = it.getBoundingClientRect();
-        const c = r.left + r.width / 2;
-        const t = Math.max(-1, Math.min(1, (c - cx) / (sc.clientWidth * 0.8)));
-        it.style.transform = `perspective(900px) rotateY(${(-t * 18).toFixed(2)}deg) scale(${(1 - Math.abs(t) * 0.08).toFixed(3)})`;
-        it.style.opacity = (1 - Math.abs(t) * 0.55).toFixed(2);
-        if (Math.abs(c - cx) < menor) { menor = Math.abs(c - cx); melhor = i; }
+      const bruto = Math.max(0, Math.min(1, (scrollY - topo()) / (box.offsetHeight - sticky.offsetHeight)));
+      const p = Math.max(0, Math.min(1, (bruto - 0.06) / 0.88)); // pequena pausa no início e no fim
+      const S = (N - 1) * G;
+      let ativo = 0, melhor = Infinity;
+      cards.forEach((c, i) => {
+        const off = i * G - p * S;           // 0 = centro; positivo = chegando (baixo-direita); negativo = já passou (cima-esquerda)
+        const a = Math.abs(off);
+        const esc = 1 - Math.min(a, 1.4) * 0.13;
+        c.style.transform = `translate(${(off * Dx).toFixed(1)}px, ${(off * Dy).toFixed(1)}px) scale(${esc.toFixed(3)}) rotate(${(-off * 2.2).toFixed(2)}deg)`;
+        c.style.opacity = Math.max(0, 1 - Math.max(0, a - 0.35) * 0.72).toFixed(2);
+        c.style.zIndex = 20 - Math.round(a * 6);
+        c.style.pointerEvents = a < 0.6 ? "auto" : "none";
+        c.classList.toggle("ativo", a < 0.5);
+        if (a < melhor) { melhor = a; ativo = i; }
       });
-      atual = melhor;
-      dots.forEach((d, i) => d.classList.toggle("on", i === melhor));
+      num.textContent = "0" + (ativo + 1);
     };
-    // atualiza direto no evento de rolagem (sem depender de requestAnimationFrame, que o iOS pausa em alguns casos)
-    const agenda = () => update();
 
-    sc.addEventListener("scroll", agenda, { passive: true });
-    addEventListener("resize", agenda);
-    update();
-
-    dots.forEach((d) => d.addEventListener("click", () => ir(+d.dataset.i)));
-    sec.querySelectorAll(".cyl-arrow").forEach((a) => a.addEventListener("click", () => ir(atual + +a.dataset.dir)));
+    measure(); update();
+    addEventListener("scroll", update, { passive: true });
+    addEventListener("resize", () => { if (innerWidth < 900) { location.reload(); return; } measure(); update(); });
+    addEventListener("load", () => { measure(); update(); });
   }
 }

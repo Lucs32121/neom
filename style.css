@@ -317,8 +317,17 @@ a.card:hover, .card:hover { border-color: rgba(var(--lime-rgb), .75); box-shadow
 }
 .cyl-on .cyl-stage { flex: 1; min-height: 0; max-width: none; padding: 0; display: flex; justify-content: center; align-items: center; perspective: 1500px; touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none; }
 .cyl-on .cyl-stage.drag { cursor: grabbing; }
-.cyl-on .cyl { display: block; position: relative; width: var(--cw); height: var(--ch); padding: 0; perspective: 1500px; scale: var(--fit, 1); }
-.cyl-on .cyl-item { position: absolute; left: 0; top: 0; width: var(--cw); height: var(--ch); backface-visibility: hidden; }
+.cyl-on .cyl { display: block; position: relative; width: var(--cw); height: var(--ch); padding: 0; perspective: 1400px; -webkit-perspective: 1400px; transform: scale(var(--fit, 1)); }
+.cyl-on .cyl-item { position: absolute; left: 0; top: 0; width: var(--cw); height: var(--ch); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+/* anéis neon que fecham o cilindro no topo e na base e giram com ele */
+.cyl-ring {
+  position: absolute; pointer-events: none; border-radius: 50%;
+  background: repeating-conic-gradient(var(--lime) 0 11deg, transparent 11deg 30deg);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+  filter: drop-shadow(0 0 5px var(--lime)) drop-shadow(0 0 16px rgba(var(--lime-rgb), .7));
+  -webkit-backface-visibility: visible; backface-visibility: visible;
+}
 .cyl-on .cyl-item .plan { height: 100%; }
 .cyl-on .cyl-ui { display: flex; align-items: center; gap: 16px; padding-bottom: 4px; }
 .cyl-on .cyl-hint { display: block; color: var(--muted); font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; padding-bottom: 12px; animation: shimmer 2.2s ease-in-out infinite; }
@@ -340,26 +349,58 @@ a.card:hover, .card:hover { border-color: rgba(var(--lime-rgb), .75); box-shadow
   .cyl-on .plan li { font-size: .88rem; }
   .cyl-on .cyl-hint { display: none; }
   .cyl-on .cyl-stage { padding: 0 6px; }
+  .cyl-on .cyl-ui { padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px)); }
 }
 
-/* Celular: rolagem horizontal nativa com snap, com profundidade calculada pelo JS */
-@media (max-width: 699px) {
-  #cyl { padding: 0; }
-  #cyl .cyl-stage { padding: 0; max-width: none; }
-  #cyl .cyl {
-    display: flex; position: relative; width: 100%; height: auto; padding: 18px 10vw 30px; gap: 0;
-    overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
-    -webkit-overflow-scrolling: touch; scrollbar-width: none;
-  }
-  #cyl .cyl::-webkit-scrollbar { display: none; }
-  #cyl .cyl-item { flex: 0 0 80vw; width: 80vw; scroll-snap-align: center; will-change: transform, opacity; }
-  #cyl .cyl-item .plan { height: auto; padding: 22px 20px; }
-  #cyl .cyl-item .plan .para { min-height: 0; font-size: .9rem; }
-  #cyl .cyl-item .plan ul { gap: 7px; margin-bottom: 18px; }
-  #cyl .cyl-item .plan li { font-size: .88rem; }
-  #cyl .cyl-ui { display: flex; justify-content: center; gap: 8px; margin-top: 6px; }
-  #cyl .cyl-hint { display: none; }
+/* Como funciona: cards grandes na diagonal (computador) */
+.diag { display: none; }
+@media (min-width: 900px) {
+  .tl { display: none; }
+  .diag { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .diag-sticky, .diag-stage { display: contents; }
+  .diag-line, .diag-count { display: none; }
 }
+.diag-card {
+  position: relative; overflow: hidden; border-radius: 28px; padding: clamp(28px, 3vw, 44px);
+  background: linear-gradient(160deg, var(--surface-2), var(--surface));
+  border: 1px solid rgba(var(--lime-rgb), .4); box-shadow: var(--glow-soft), 0 40px 80px rgba(0, 0, 0, .45);
+}
+.diag-card .d-n {
+  position: absolute; right: 24px; top: 6px; font: 800 clamp(5rem, 9vw, 8rem)/1 var(--font-title); letter-spacing: -.05em;
+  color: transparent; -webkit-text-stroke: 2px rgba(var(--lime-rgb), .75); filter: drop-shadow(0 0 8px rgba(var(--lime-rgb), .7));
+}
+.diag-card h3 { position: relative; font-size: clamp(1.5rem, 2.4vw, 2.1rem); margin: 0 0 14px; max-width: 78%; }
+.diag-card p { position: relative; color: var(--muted); font-size: 1.08rem; max-width: 36ch; }
+.d-art { position: relative; margin-top: 28px; }
+.d-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.d-chips i { font: 600 .85rem var(--font-title); font-style: normal; padding: 9px 16px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); animation: chipOn 4.5s ease-in-out infinite; }
+.d-chips i:nth-child(2) { animation-delay: 1.5s; }
+.d-chips i:nth-child(3) { animation-delay: 3s; }
+.d-form { display: grid; gap: 10px; width: 100%; max-width: 320px; }
+.d-form b { display: block; height: 36px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); position: relative; overflow: hidden; }
+.d-form b::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: rgba(var(--lime-rgb), .3); border-right: 2px solid var(--lime); animation: typeFill 3.4s ease-in-out infinite; }
+.d-form b:nth-child(2)::after { animation-delay: .8s; }
+.d-form em { display: block; width: 150px; height: 38px; border-radius: 999px; background: var(--lime); box-shadow: var(--glow-box); animation: breathe 2.6s ease-in-out infinite; }
+.d-build { max-width: 340px; }
+.d-build .bar { height: 12px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
+.d-build .bar i { display: block; height: 100%; border-radius: inherit; background: var(--lime); box-shadow: 0 0 14px var(--lime), 0 0 30px rgba(var(--lime-rgb), .6); animation: meter 3.5s var(--ease) infinite; }
+.d-build span { display: inline-block; margin-top: 14px; color: var(--lime); text-shadow: var(--glow-text); font: 700 .8rem var(--font-title); letter-spacing: .12em; }
+
+/* modo diagonal (ativado pelo JS no computador) */
+.diag-on { display: block; height: 380vh; }
+.diag-on .diag-sticky { display: block; position: sticky; top: 68px; height: calc(100vh - 68px); height: calc(100svh - 68px); overflow: hidden; }
+.diag-on .diag-stage { display: block; position: absolute; inset: 0; }
+.diag-on .diag-line { display: block; position: absolute; left: 50%; top: 50%; width: 190vmax; height: 2px; background: linear-gradient(90deg, transparent, rgba(var(--lime-rgb), .9) 30%, rgba(var(--lime-rgb), .9) 70%, transparent); box-shadow: 0 0 12px var(--lime), 0 0 30px rgba(var(--lime-rgb), .5); opacity: .45; transform: translate(-50%, -50%) rotate(32deg); }
+.diag-on .diag-card { position: absolute; left: 50%; top: 50%; width: var(--dw); height: var(--dh); margin: calc(var(--dh) / -2) 0 0 calc(var(--dw) / -2); will-change: transform, opacity; }
+.diag-on .diag-card.ativo { border-color: var(--lime); box-shadow: var(--glow-box), 0 40px 80px rgba(0, 0, 0, .5); }
+.diag-on .diag-count { display: block; position: absolute; left: 28px; bottom: 24px; font-family: var(--font-title); color: var(--muted); font-weight: 600; z-index: 20; }
+.diag-on .diag-count b { color: var(--lime); text-shadow: var(--glow-text); font-size: 2.8rem; font-weight: 800; letter-spacing: -.03em; }
+@keyframes chipOn {
+  0%, 100% { color: var(--muted); border-color: var(--line); background: transparent; box-shadow: none; }
+  12%, 30% { color: var(--ink); border-color: var(--lime); background: var(--lime); box-shadow: var(--glow-box); }
+}
+@keyframes typeFill { 0% { width: 0; } 55%, 85% { width: 78%; } 100% { width: 0; } }
+
 .cta-box { position: relative; overflow: hidden; text-align: center; background: var(--surface); border: 1px solid rgba(var(--lime-rgb), .6); border-radius: 28px; padding: clamp(36px, 6vw, 64px) 24px; box-shadow: var(--glow-soft), inset 0 0 60px rgba(var(--lime-rgb), .06); }
 .cta-box::before { content: ""; position: absolute; left: 50%; top: -60%; width: 520px; height: 520px; margin-left: -260px; border-radius: 50%; background: radial-gradient(circle, rgba(var(--lime-rgb), .2), transparent 65%); animation: pulseBig 5s ease-in-out infinite; pointer-events: none; }
 .cta-box > * { position: relative; }
