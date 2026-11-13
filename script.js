@@ -36,6 +36,10 @@ const PLANOS = {
 const params = new URLSearchParams(location.search);
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const FINE = matchMedia("(hover: hover) and (pointer: fine)").matches;
+// celular: os planos viram uma rolagem horizontal nativa (mais confiável no iPhone)
+const SWIPE_MQ = matchMedia("(max-width: 699px)");
+const SWIPE = SWIPE_MQ.matches;
+SWIPE_MQ.addEventListener("change", () => location.reload());
 const fmt = (n) => n.toLocaleString("pt-BR");
 document.documentElement.classList.add("js");
 
@@ -144,6 +148,8 @@ if (FINE && !REDUCED) {
     });
   }, { threshold: 0.12 });
   alvos.forEach((el) => {
+    // os planos do cilindro ficam fora da tela até serem trazidos; não podem depender da revelação ao rolar
+    if (el.closest(".cyl")) return;
     const i = [...el.parentElement.children].indexOf(el);
     el.style.setProperty("--d", Math.min(i, 6) * 0.09 + "s");
     el.classList.add("reveal");
@@ -269,7 +275,7 @@ addEventListener("pageshow", () => document.body.classList.remove("leaving"));
 /* ---------- Cilindro de planos: a rolagem vertical gira os cards na horizontal ---------- */
 {
   const sec = document.getElementById("cyl");
-  if (sec && !REDUCED) {
+  if (sec && !REDUCED && !SWIPE) {
     const sticky = sec.querySelector(".cyl-sticky");
     const stage = sec.querySelector(".cyl-stage");
     const cyl = sec.querySelector(".cyl");
@@ -277,13 +283,17 @@ addEventListener("pageshow", () => document.body.classList.remove("leaving"));
     const dots = [...sec.querySelectorAll(".cyl-dot")];
     const ui = sec.querySelector(".cyl-ui");
     const nav = document.querySelector(".nav");
-    const N = items.length, STEP = 40;
+    const N = items.length;
+    let STEP = 40;
     let cw = 340, R = 544, target = 0, cur = 0;
     sec.classList.add("cyl-on");
 
     const measure = () => {
       cw = Math.min(340, innerWidth * 0.78);
-      R = cw * 1.6;
+      // em celular, o cilindro fica mais "fechado" para os vizinhos continuarem visíveis
+      const estreito = innerWidth < 700;
+      STEP = estreito ? 28 : 40;
+      R = cw * (estreito ? 1.25 : 1.6);
       cyl.style.setProperty("--cw", cw + "px");
       cyl.style.setProperty("--ch", "auto");
       cyl.style.setProperty("--fit", 1);
@@ -291,7 +301,6 @@ addEventListener("pageshow", () => document.body.classList.remove("leaving"));
       cyl.style.setProperty("--ch", ch + "px");
       const livre = sticky.clientHeight - ui.offsetHeight - 70;
       cyl.style.setProperty("--fit", Math.min(1, livre / ch));
-      items.forEach((it, i) => { it.style.transform = `rotateY(${i * STEP}deg) translateZ(${R}px)`; });
     };
 
     const faixa = () => sec.offsetHeight - sticky.offsetHeight;
@@ -311,9 +320,14 @@ addEventListener("pageshow", () => document.body.classList.remove("leaving"));
     const render = () => {
       cur += (target - cur) * 0.11;
       if (Math.abs(target - cur) < 0.001) cur = target;
-      cyl.style.transform = `translateZ(${-R}px) rotateY(${-cur * STEP}deg)`;
+      // cada plano fica na sua posição do cilindro; o z-index garante que o da frente cubra os outros
       items.forEach((it, i) => {
-        const d = Math.min(Math.abs(i - cur), 1);
+        const delta = i - cur;
+        const th = (delta * STEP * Math.PI) / 180;
+        const x = R * Math.sin(th), z = R * (Math.cos(th) - 1);
+        const d = Math.min(Math.abs(delta), 1);
+        it.style.transform = `translate3d(${x.toFixed(1)}px, 0, ${z.toFixed(1)}px) rotateY(${(-delta * STEP).toFixed(2)}deg)`;
+        it.style.zIndex = 100 - Math.round(d * 100);
         it.style.opacity = 1 - d * 0.62;
         it.style.pointerEvents = d < 0.5 ? "auto" : "none";
       });
@@ -564,4 +578,46 @@ if (form) {
     document.getElementById("form-nota").textContent =
       "Abrimos o WhatsApp com sua mensagem pronta. É só enviar por lá.";
   });
+}
+
+/* ---------- Planos no celular: rolagem horizontal nativa com profundidade ---------- */
+{
+  const sec = document.getElementById("cyl");
+  if (sec && SWIPE) {
+    const sc = sec.querySelector(".cyl");
+    const items = [...sec.querySelectorAll(".cyl-item")];
+    const dots = [...sec.querySelectorAll(".cyl-dot")];
+    let atual = 0, pendente = false;
+
+    const ir = (i) => {
+      const it = items[Math.max(0, Math.min(items.length - 1, i))];
+      sc.scrollTo({ left: it.offsetLeft - (sc.clientWidth - it.offsetWidth) / 2, behavior: REDUCED ? "auto" : "smooth" });
+    };
+
+    // cards do centro ficam nítidos e de frente; os das laterais giram e esmaecem
+    const update = () => {
+      pendente = false;
+      const cx = sc.getBoundingClientRect().left + sc.clientWidth / 2;
+      let melhor = 0, menor = Infinity;
+      items.forEach((it, i) => {
+        const r = it.getBoundingClientRect();
+        const c = r.left + r.width / 2;
+        const t = Math.max(-1, Math.min(1, (c - cx) / (sc.clientWidth * 0.8)));
+        it.style.transform = `perspective(900px) rotateY(${(-t * 18).toFixed(2)}deg) scale(${(1 - Math.abs(t) * 0.08).toFixed(3)})`;
+        it.style.opacity = (1 - Math.abs(t) * 0.55).toFixed(2);
+        if (Math.abs(c - cx) < menor) { menor = Math.abs(c - cx); melhor = i; }
+      });
+      atual = melhor;
+      dots.forEach((d, i) => d.classList.toggle("on", i === melhor));
+    };
+    // atualiza direto no evento de rolagem (sem depender de requestAnimationFrame, que o iOS pausa em alguns casos)
+    const agenda = () => update();
+
+    sc.addEventListener("scroll", agenda, { passive: true });
+    addEventListener("resize", agenda);
+    update();
+
+    dots.forEach((d) => d.addEventListener("click", () => ir(+d.dataset.i)));
+    sec.querySelectorAll(".cyl-arrow").forEach((a) => a.addEventListener("click", () => ir(atual + +a.dataset.dir)));
+  }
 }
