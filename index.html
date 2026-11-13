@@ -1,333 +1,210 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NEOM | Sites que vendem — Landing Page, Institucional e Catálogo</title>
-<meta name="description" content="Escolha entre landing page, site institucional ou site de catálogo. Sites rápidos, modernos e feitos para converter.">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#07070a;--surface:#111114;--text:#f5f5f0;--muted:#a3a39b;--line:#26261f;
-  --accent:#e8ff1a;--accent-ink:#0a0a0a;--glow:rgba(232,255,26,.45);
-  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
-}
-:root:not([data-theme="light"]){color-scheme:dark}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#0a0a0a;--surface:#141414;--text:#f5f5f0;--muted:#a3a39b;--line:#262622;
-    --accent:#e8ff1a;--accent-ink:#0a0a0a;--glow:rgba(232,255,26,.28);color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0a0a0a;--surface:#141414;--text:#f5f5f0;--muted:#a3a39b;--line:#262622;
-  --accent:#e8ff1a;--accent-ink:#0a0a0a;--glow:rgba(232,255,26,.28);color-scheme:dark;
-}
-*,*::before,*::after{box-sizing:inherit}
-html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px)}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6}
-h1,h2,h3{font-family:"Space Grotesk",Inter,system-ui,sans-serif;line-height:1.1;margin:0;letter-spacing:-.02em}
-a{color:inherit;text-decoration:none}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;border-radius:999px;font-weight:600;font-size:15px;border:1px solid var(--line);transition:transform .15s,box-shadow .15s}
-.btn:hover{transform:translateY(-2px)}
-.btn-primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);box-shadow:0 0 24px var(--glow)}
-.btn-ghost{background:transparent;color:var(--text)}
-/* header */
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:49}
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
-.logo{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:24px;letter-spacing:.06em}
-.logo span{color:var(--accent);text-shadow:0 0 14px var(--glow)}
-.links{display:flex;gap:28px;font-size:14px;color:var(--muted)}
-.links a:hover{color:var(--text)}
-.nav .btn{padding:9px 18px;font-size:14px}
-@media(max-width:720px){.links{display:none}}
-/* hero */
-.hero{padding:64px 0 72px;position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;width:520px;height:520px;right:-120px;top:-60px;background:radial-gradient(circle,var(--glow),transparent 65%);pointer-events:none}
-.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;position:relative}
-.hero h1{font-size:clamp(38px,6vw,68px)}
-.hero h1 em{font-style:normal;color:var(--accent);text-shadow:0 0 28px var(--glow)}
-.hero p.lead{font-size:18px;color:var(--muted);max-width:520px;margin:20px 0 28px}
-.cta{display:flex;gap:12px;flex-wrap:wrap}
-.stats{display:flex;gap:36px;margin-top:40px}
-.stats b{display:block;font-family:"Space Grotesk",sans-serif;font-size:28px;color:var(--accent)}
-.stats span{font-size:13px;color:var(--muted)}
-/* laptop mockup */
-.laptop{position:relative;filter:drop-shadow(0 0 30px var(--glow))}
-.screen{border:3px solid var(--accent);border-radius:14px 14px 4px 4px;background:#0b0b0b;padding:14px;aspect-ratio:16/10}
-.bar{display:flex;gap:6px;margin-bottom:12px}
-.bar i{width:8px;height:8px;border-radius:50%;background:#333}
-.bar i:first-child{background:var(--accent)}
-.mock-h{height:14px;width:62%;background:#f1f1ea;border-radius:4px;margin-bottom:8px}
-.mock-h.s{width:40%;background:var(--accent)}
-.mock-p{height:6px;width:80%;background:#2d2d2a;border-radius:3px;margin:6px 0}
-.mock-p.m{width:68%}
-.mock-btn{width:84px;height:22px;background:var(--accent);border-radius:999px;margin:14px 0}
-.mock-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
-.mock-cards div{height:46px;border:1px solid #2d2d2a;border-radius:6px;background:#141414}
-.base{height:12px;margin:0 -6%;border-radius:0 0 18px 18px;background:linear-gradient(#cfcfc6,#8d8d85)}
-@media(max-width:860px){.hero-grid{grid-template-columns:1fr}.hero{padding-top:40px}}
-/* sections */
-section{padding:80px 0}
-.eyebrow{display:inline-block;font-size:13px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.14em;margin-bottom:12px}
-.sec-head{text-align:center;max-width:620px;margin:0 auto 48px}
-.sec-head h2{font-size:clamp(30px,4.5vw,44px)}
-.sec-head p{color:var(--muted);margin:14px 0 0}
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
-.plan{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:30px 26px}
-.plan.hot{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 0 36px var(--glow)}
-.tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--accent);color:var(--accent-ink);font-size:12px;font-weight:700;padding:4px 14px;border-radius:999px;white-space:nowrap}
-.plan h3{font-size:24px}
-.plan .sub{color:var(--muted);font-size:14px;margin:6px 0 20px}
-.price{font-family:"Space Grotesk",sans-serif;font-size:38px;font-weight:700}
-.plan .inst{font-size:13px;color:var(--muted);margin:2px 0 22px}
-.plan ul{list-style:none;padding:0;margin:0 0 28px;flex:1}
-.plan li{display:flex;gap:10px;font-size:14.5px;padding:6px 0}
-.plan li::before{content:"✓";color:var(--accent);font-weight:700}
-.plan .btn{width:100%}
-.plan:not(.hot) .btn{background:transparent;color:var(--text)}
-.plan:not(.hot) .btn:hover{border-color:var(--accent)}
-@media(max-width:900px){.plans{grid-template-columns:1fr;max-width:460px;margin:0 auto}}
-.feats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:56px}
-.feat{border:1px solid var(--line);border-radius:18px;padding:22px;background:var(--surface)}
-.feat .ic{width:44px;height:44px;border-radius:12px;border:1.5px solid var(--accent);color:var(--accent);display:grid;place-items:center;margin-bottom:14px;box-shadow:0 0 14px var(--glow),inset 0 0 12px var(--glow);filter:drop-shadow(0 0 4px var(--accent))}.feat .ic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.feat h3{font-size:17px;margin-bottom:6px}
-.feat p{margin:0;font-size:14px;color:var(--muted)}
-@media(max-width:900px){.feats{grid-template-columns:1fr 1fr}}
-@media(max-width:520px){.feats{grid-template-columns:1fr}}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-.step{border-top:2px solid var(--line);padding-top:18px}
-.step:hover{border-color:var(--accent)}
-.step .n{font-family:"Space Grotesk",sans-serif;font-size:44px;font-weight:700;color:var(--accent);opacity:.9}
-.step h3{font-size:20px;margin:6px 0}
-.step p{margin:0;color:var(--muted);font-size:14.5px}
-@media(max-width:860px){.steps{grid-template-columns:1fr 1fr}}
-@media(max-width:480px){.steps{grid-template-columns:1fr}}
-.faq{max-width:760px;margin:0 auto}
-details{border:1px solid var(--line);border-radius:16px;background:var(--surface);margin-bottom:12px;padding:0 22px}
-summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;padding:18px 0;font-weight:600;font-family:"Space Grotesk",sans-serif;font-size:18px}
-summary::-webkit-details-marker{display:none}
-summary::after{content:"+";color:var(--accent);font-size:24px;transition:transform .2s}
-details[open] summary::after{transform:rotate(45deg)}
-details p{margin:0 0 18px;color:var(--muted);font-size:15px}
-.final{text-align:center;border:1px solid var(--accent);border-radius:28px;padding:64px 24px;background:radial-gradient(circle at 50% 0,var(--glow),transparent 70%),var(--surface);box-shadow:0 0 44px var(--glow)}
-.final h2{font-size:clamp(30px,5vw,48px)}
-.final p{color:var(--muted);max-width:480px;margin:14px auto 28px}
-footer{padding:32px 0;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
-/* neon lights */
-body{background:radial-gradient(900px 500px at 85% -5%,var(--glow),transparent 60%),radial-gradient(700px 500px at -10% 40%,rgba(232,255,26,.10),transparent 60%),var(--bg);background-attachment:fixed}
-header{box-shadow:0 1px 0 var(--accent),0 4px 22px -6px var(--glow)}
-.logo span{animation:flick 5s infinite}
-@keyframes flick{0%,18%,22%,62%,64%,100%{opacity:1;text-shadow:0 0 8px var(--accent),0 0 22px var(--accent)}20%,63%{opacity:.45;text-shadow:none}}
-.hero h1 em{text-shadow:0 0 10px var(--accent),0 0 34px var(--accent),0 0 70px var(--glow)}
-.hero::after{content:"";position:absolute;left:-10%;right:-10%;bottom:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);box-shadow:0 0 22px 4px var(--glow)}
-.btn-primary{box-shadow:0 0 12px var(--accent),0 0 34px var(--glow)}
-.btn-primary:hover{box-shadow:0 0 18px var(--accent),0 0 54px var(--glow)}
-.btn-ghost:hover,.plan:not(.hot) .btn:hover{border-color:var(--accent);box-shadow:0 0 16px var(--glow)}
-.plan{transition:transform .2s,box-shadow .2s,border-color .2s}
-.plan:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 0 28px var(--glow)}
-.plan.hot{box-shadow:0 0 0 1px var(--accent),0 0 18px var(--accent),0 0 60px var(--glow)}
-.tag{box-shadow:0 0 16px var(--accent)}
-.plan li::before{text-shadow:0 0 8px var(--accent)}
-.price{text-shadow:0 0 18px var(--glow)}
-.eyebrow,.stats b,.step .n{text-shadow:0 0 12px var(--accent)}
-.feat:hover{border-color:var(--accent);box-shadow:0 0 22px var(--glow)}
-.step:hover{box-shadow:0 -6px 18px -8px var(--accent)}
-.screen{box-shadow:0 0 18px var(--accent),inset 0 0 26px var(--glow)}
-details[open]{border-color:var(--accent);box-shadow:0 0 20px var(--glow)}
-summary::after{text-shadow:0 0 10px var(--accent)}
-.final{box-shadow:0 0 0 1px var(--accent),0 0 28px var(--accent),0 0 90px var(--glow)}
-/* 404 */
-#erro-404{display:none;min-height:calc(100vh - 140px);padding:72px 0;text-align:center;place-items:center;position:relative;overflow:hidden}
-#erro-404::before{content:"";position:absolute;width:620px;height:620px;left:50%;top:40%;transform:translate(-50%,-50%);background:radial-gradient(circle,var(--glow),transparent 62%);pointer-events:none}
-body.is-404 main>*:not(#erro-404){display:none}
-body.is-404 #erro-404{display:grid}
-.e404{position:relative}
-.e404 .big{font-family:"Space Grotesk",Inter,sans-serif;font-weight:700;font-size:clamp(96px,26vw,250px);line-height:1;letter-spacing:.04em;margin:8px 0 4px}
-.e404 .big span{color:var(--accent);animation:flick 5s infinite}
-.e404 h1{font-size:clamp(26px,4.5vw,40px)}
-.e404 p{color:var(--muted);max-width:460px;margin:14px auto 28px}
-.e404 .cta{justify-content:center}
-.e404 .quick{margin-top:30px;display:flex;gap:22px;justify-content:center;flex-wrap:wrap;font-size:14px;color:var(--muted)}
-.e404 .quick a:hover{color:var(--accent);text-shadow:0 0 10px var(--accent)}
-/* quiz */
-.quiz-card{max-width:720px;margin:0 auto;background:var(--surface);border:1px solid var(--accent);border-radius:24px;padding:32px 26px;box-shadow:0 0 28px var(--glow)}
-.qbar{height:6px;border-radius:99px;background:var(--line);margin-bottom:22px;overflow:hidden}
-.qbar i{display:block;height:100%;background:var(--accent);box-shadow:0 0 12px var(--accent);transition:width .3s}
-.qstep{font-size:13px;color:var(--muted);margin-bottom:8px}
-.quiz-card h3{font-size:clamp(21px,3.4vw,28px);margin-bottom:20px}
-.qopt{display:block;width:100%;text-align:left;font:inherit;color:var(--text);background:transparent;border:1px solid var(--line);border-radius:14px;padding:15px 18px;margin-bottom:10px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
-.qopt:hover,.qopt:focus-visible{border-color:var(--accent);box-shadow:0 0 16px var(--glow);outline:none}
-.qback{background:none;border:0;color:var(--muted);font:inherit;cursor:pointer;margin-top:6px;padding:6px 0}
-.qback:hover{color:var(--accent)}
-.qres{text-align:center}
-.qres .nm{font-family:"Space Grotesk",Inter,sans-serif;font-weight:700;font-size:clamp(32px,6vw,48px);color:var(--accent);text-shadow:0 0 12px var(--accent),0 0 36px var(--glow);margin:6px 0}
-.qres .pr{font-size:20px;font-weight:600}
-.qres p{color:var(--muted);max-width:480px;margin:12px auto 24px}
-.qres .cta{justify-content:center}
-.hero .cta{flex-wrap:nowrap;align-items:center}
-@media(max-width:560px){.hero .cta{flex-wrap:wrap}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NEOM — Sites que colocam seu negócio no digital</title>
+  <meta name="description" content="A NEOM constrói landing pages, sites institucionais e sites de catálogo para o seu negócio vender mais na internet.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <div class="wrap nav">
-    <a class="logo" href="#">NE<span>O</span>M</a>
-    <nav class="links"><a href="#planos">Planos</a><a href="quiz.html">Quiz</a><a href="#como-funciona">Como funciona</a><a href="#duvidas">Dúvidas</a></nav>
-    <a class="btn btn-primary" href="#planos">Quero meu site</a>
-  </div>
-</header>
+  <header class="nav">
+    <div class="wrap nav-in">
+      <a class="logo" href="index.html" aria-label="NEOM — início">NE<span>O</span>M</a>
+      <nav aria-label="Principal">
+        <a href="planos.html">Planos</a>
+        <a href="site-ideal.html">Site ideal</a>
+        <a href="duvidas.html">Dúvidas</a>
+      </nav>
+      <a class="btn btn-lime btn-sm" href="planos.html">Quero um site</a>
+    </div>
+  </header>
 
-<main>
-<div class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <h1>Seu negócio merece um site que <em>brilha.</em></h1>
-      <p class="lead">Escolha o tipo de site ideal e tenha uma presença digital moderna, rápida e feita para transformar visitantes em clientes.</p>
-      <div class="cta"><a class="btn btn-primary" href="#planos">Ver planos</a><a class="btn btn-ghost" href="quiz.html">Qual o tipo de site ideal para mim?</a><a class="btn btn-ghost" href="#como-funciona">Como funciona</a></div>
+  <main>
+    <!-- Primeiro andar -->
+    <section class="hero">
+      <span class="orb o1" aria-hidden="true"></span>
+      <span class="orb o2" aria-hidden="true"></span>
+      <div class="wrap hero-grid">
+        <div>
+          <span class="tag">Criação de sites</span>
+          <h1>Seu negócio merece um site que <span class="lime typed" data-words="trabalha por você.|vende por você.|passa confiança.|atrai clientes.">trabalha por você.</span></h1>
+          <p class="lead">A NEOM é uma empresa digital que constrói sites profissionais, rápidos e feitos sob medida — para o seu negócio ser encontrado, passar confiança e vender mais.</p>
+          <div class="hero-actions">
+            <a class="btn btn-lime" href="planos.html">Quero um site para mim</a>
+            <a class="btn btn-white" href="site-ideal.html">Qual o site ideal para mim?</a>
+            <a class="btn btn-ghost" href="duvidas.html">Dúvidas</a>
+            <a class="btn btn-ghost btn-whats" data-whats href="obrigado.html?contato=duvida" target="_blank" rel="noopener">Fale conosco</a>
+          </div>
+        </div>
+
+        <div class="mock-wrap" aria-hidden="true">
+          <div class="mock">
+            <div class="mock-bar"><i></i><i></i><i></i><span class="mock-url">seunegocio.com.br</span></div>
+            <div class="mock-body">
+              <div class="m-nav"><b></b><b></b><b></b><b></b></div>
+              <b class="m-title"></b>
+              <b class="m-title t2"></b>
+              <b class="l1"></b>
+              <b class="l2"></b>
+              <b class="m-btn"></b>
+              <div class="mock-cards"><b></b><b></b><b></b></div>
+            </div>
+          </div>
+          <span class="chip c1">Responsivo</span>
+          <span class="chip c2">Carrega rápido</span>
+          <span class="chip c3">Pronto para o Google</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Faixa em movimento -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Landing Page</span><span>Site Institucional</span><span>Site de Catálogo</span><span>Sob medida</span><span>Pagamento único</span><span>Responsivo</span>
+        <span>Landing Page</span><span>Site Institucional</span><span>Site de Catálogo</span><span>Sob medida</span><span>Pagamento único</span><span>Responsivo</span>
+      </div>
+    </div>
+
+    <!-- Números -->
+    <div class="wrap">
       <div class="stats">
-        <div><b>4 a 16 horas</b><span>entrega mais rápida</span></div>
+        <div class="stat"><b data-count="3">0</b><span>formatos de site para escolher</span></div>
+        <div class="stat"><b data-count="5">0</b><span>perguntas para achar o seu ideal</span></div>
+        <div class="stat"><b data-count="1">0</b><span>pagamento único, sem mensalidade</span></div>
       </div>
     </div>
-    <div class="laptop" role="img" aria-label="Notebook com contorno neon amarelo exibindo um site moderno">
-      <div class="screen">
-        <div class="bar"><i></i><i></i><i></i></div>
-        <div class="mock-h"></div><div class="mock-h s"></div>
-        <div class="mock-p"></div><div class="mock-p m"></div>
-        <div class="mock-btn"></div>
-        <div class="mock-cards"><div></div><div></div><div></div></div>
+
+    <!-- Planos -->
+    <section class="band">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Um site para cada <span class="lime">momento</span> do seu negócio</h2>
+          <p class="lead">Três formatos, preço fechado e sem surpresa.</p>
+        </div>
+        <div class="grid-3">
+          <a class="card" href="planos.html">
+            <span class="step-n">R$ 227</span>
+            <h3>Landing Page</h3>
+            <p>Uma página única e direta, pensada para apresentar uma oferta e gerar contatos.</p>
+          </a>
+          <a class="card" href="planos.html">
+            <span class="step-n">R$ 447</span>
+            <h3>Site Institucional</h3>
+            <p>Várias páginas para apresentar sua empresa, seus serviços e passar credibilidade.</p>
+          </a>
+          <a class="card" href="planos.html">
+            <span class="step-n">R$ 1.229</span>
+            <h3>Site de Catálogo</h3>
+            <p>Seus produtos organizados por categoria, com fotos e preços, prontos para o cliente escolher.</p>
+          </a>
+        </div>
       </div>
-      <div class="base"></div>
-    </div>
-  </div>
-</div>
+    </section>
 
-<section id="planos">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">Escolha o seu</span>
-      <h2>3 caminhos para o seu sucesso online</h2>
-      <p>Cada site é pensado para um objetivo diferente. Encontre o que combina com você.</p>
-    </div>
-    <div class="plans">
-      <article class="plan">
-        <h3>Landing Page</h3>
-        <p class="sub">Uma página, um objetivo: vender.</p>
-        <div class="price">R$227,79</div>
-        <div class="inst">ou em até 12x no cartão · Entrega em 4 horas em média</div>
-        <ul>
-          <li>Página única focada em conversão</li>
-          <li>Copy estratégica de vendas</li>
-          <li>Botão direto para WhatsApp</li>
-          <li>Formulário de captura de leads</li>
-          <li>100% adaptada ao celular</li>
-          <li>Integração com Pixel e Analytics</li>
-        </ul>
-        <a class="btn" href="https://pay.kiwify.com.br/33Eo46c">Quero esse</a>
-      </article>
-      <article class="plan hot">
-        <span class="tag">Mais escolhido</span>
-        <h3>Site Institucional</h3>
-        <p class="sub">A presença digital que sua marca merece.</p>
-        <div class="price">R$448,89</div>
-        <div class="inst">ou em até 12x no cartão · Entrega em 8 a 12 horas</div>
-        <ul>
-          <li>Até 6 páginas (Home, Sobre, Serviços...)</li>
-          <li>Design exclusivo da sua marca</li>
-          <li>Blog para conteúdo e SEO</li>
-          <li>Formulário de contato e mapa</li>
-          <li>Otimizado para o Google</li>
-          <li>Domínio e e-mail profissional</li>
-        </ul>
-        <a class="btn btn-primary" href="https://pay.kiwify.com.br/4EFHuvu">Quero esse</a>
-      </article>
-      <article class="plan">
-        <h3>Site de Catálogo</h3>
-        <p class="sub">Seus produtos expostos 24h por dia.</p>
-        <div class="price">R$1.227,79</div>
-        <div class="inst">ou em até 12x no cartão · Entrega em 16 horas em média</div>
-        <ul>
-          <li>Catálogo com categorias e filtros</li>
-          <li>Página individual por produto</li>
-          <li>Pedido direto pelo WhatsApp</li>
-          <li>Painel para editar produtos</li>
-          <li>Busca de produtos integrada</li>
-          <li>Fotos em alta qualidade e rápidas</li>
-        </ul>
-        <a class="btn" href="https://pay.kiwify.com.br/cTDUkET">Quero esse</a>
-      </article>
-    </div>
-    <div class="feats">
-      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div><h3>Ultra rápido</h3><p>Carregamento instantâneo que segura o visitante.</p></div>
-      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div><h3>Mobile first</h3><p>Perfeito em qualquer tela, do celular ao desktop.</p></div>
-      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div><h3>Pronto pro Google</h3><p>Estrutura otimizada para aparecer nas buscas.</p></div>
-      <div class="feat"><div class="ic"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L3 21l1.9-5.4A8 8 0 1 1 21 12z"/></svg></div><h3>Suporte humano</h3><p>Atendimento direto com quem fez o seu site.</p></div>
-    </div>
-  </div>
-</section>
+    <!-- Bento -->
+    <section>
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Feito para <span class="lime">funcionar</span>, não só para aparecer</h2>
+          <p class="lead">O que todo site da NEOM já leva de série.</p>
+        </div>
+        <div class="bento">
+          <div class="card b-wide">
+            <h3>Funciona em qualquer tela</h3>
+            <p>Celular, tablet ou computador: seu site se adapta e fica bonito em todos.</p>
+            <div class="viz" aria-hidden="true">
+              <div class="devices">
+                <div class="dev-pc"><i></i><i></i><i></i><i></i></div>
+                <div class="dev-ph"><i></i><i></i><i></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Carrega rápido</h3>
+            <p>Ninguém espera uma página lenta.</p>
+            <div class="viz" aria-hidden="true">
+              <div class="meter"><div class="meter-bar"><i></i></div><small>VELOCIDADE</small></div>
+            </div>
+          </div>
+          <div class="card b-tall">
+            <h3>Pronto para o Google</h3>
+            <p>Estrutura pensada para o seu negócio ser encontrado nas buscas.</p>
+            <div class="viz" aria-hidden="true">
+              <div class="search">
+                <div class="search-bar">seu tipo de negócio</div>
+                <div class="search-res"><b>seunegocio.com.br</b>Seu site, no topo da conversa.</div>
+                <div class="search-res">Outros resultados…</div>
+              </div>
+            </div>
+          </div>
+          <div class="card b-wide">
+            <h3>Com a cara da sua marca</h3>
+            <p>Nada de modelo genérico: o site é construído com as suas cores, textos e estilo.</p>
+            <div class="viz" aria-hidden="true">
+              <div class="swatches"><i></i><i></i><i></i><i></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<section id="como-funciona">
-  <div class="wrap">
-    <div class="sec-head"><h2>Do zero ao ar em 4 passos</h2></div>
-    <div class="steps">
-      <div class="step"><div class="n">01</div><h3>Conversa</h3><p>Entendemos seu negócio, público e objetivos.</p></div>
-      <div class="step"><div class="n">02</div><h3>Design</h3><p>Criamos o layout exclusivo e você aprova.</p></div>
-      <div class="step"><div class="n">03</div><h3>Desenvolvimento</h3><p>Seu site ganha vida, rápido e otimizado.</p></div>
-      <div class="step"><div class="n">04</div><h3>No ar</h3><p>Publicamos e você começa a receber clientes.</p></div>
-    </div>
-  </div>
-</section>
+    <!-- Como funciona -->
+    <section class="band">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Como <span class="lime">funciona</span></h2>
+          <p class="lead">Do pedido ao site no ar, em três passos simples.</p>
+        </div>
+        <div class="tl">
+          <div class="card">
+            <span class="tl-dot">1</span>
+            <h3>Você escolhe o plano</h3>
+            <p>Escolha o formato ideal — ou faça nosso teste rápido de 5 perguntas para descobrir.</p>
+          </div>
+          <div class="card">
+            <span class="tl-dot">2</span>
+            <h3>Conta sobre o seu negócio</h3>
+            <p>Depois da compra, você preenche suas informações e fala direto com a gente.</p>
+          </div>
+          <div class="card">
+            <span class="tl-dot">3</span>
+            <h3>A NEOM constrói</h3>
+            <p>Criamos seu site sob medida e entregamos pronto para receber seus clientes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<section id="duvidas">
-  <div class="wrap">
-    <div class="sec-head"><h2>Dúvidas frequentes</h2></div>
-    <div class="faq">
-      <details><summary>Qual site é o ideal para mim?</summary><p>Se você quer vender uma oferta específica, a Landing Page é o caminho. Para apresentar sua marca e ser encontrado no Google, o Institucional. Se precisa mostrar vários produtos, o Catálogo.</p></details>
-      <details><summary>Posso parcelar o pagamento?</summary><p>Sim! Todos os planos podem ser parcelados em até 12x no cartão de crédito.</p></details>
-      <details><summary>Preciso ter domínio e hospedagem?</summary><p>Não precisa chegar com nada pronto. Ajudamos você a escolher e configurar o domínio e a hospedagem do seu site. O domínio .com é gratuito apenas no primeiro ano; a partir do segundo ano, a renovação é cobrada.</p></details>
-      <details><summary>Consigo alterar o conteúdo depois?</summary><p>Sim. Você pode solicitar ajustes ao nosso suporte e, no site de catálogo, editar seus produtos direto pelo painel.</p></details>
-    </div>
-  </div>
-</section>
+    <!-- CTA final -->
+    <section>
+      <div class="wrap">
+        <div class="cta-box">
+          <h2>Pronto para ter o <span class="lime">seu site?</span></h2>
+          <p>Veja os planos ou descubra em menos de um minuto qual deles combina com o seu negócio.</p>
+          <div class="hero-actions">
+            <a class="btn btn-lime" href="planos.html">Quero um site para mim</a>
+            <a class="btn btn-ghost" href="site-ideal.html">Qual o site ideal para mim?</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<section>
-  <div class="wrap">
-    <div class="final">
-      <h2>Pronto para acender seu negócio?</h2>
-      <p>Fale com a gente agora e receba uma proposta personalizada em minutos.</p>
-      <a class="btn btn-primary" href="https://wa.me/5583994054176?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20os%20sites.">Falar no WhatsApp</a>
+  <footer>
+    <div class="wrap foot">
+      <a class="logo" href="index.html">NE<span>O</span>M</a>
+      <nav aria-label="Rodapé">
+        <a href="planos.html">Planos</a>
+        <a href="site-ideal.html">Site ideal</a>
+        <a href="duvidas.html">Dúvidas</a>
+      </nav>
+      <span>© 2026 NEOM. Todos os direitos reservados.</span>
     </div>
-  </div>
-</section>
-<section id="erro-404">
-  <div class="wrap e404">
-    <span class="eyebrow">Erro 404</span>
-    <div class="big" aria-hidden="true">4<span>O</span>4</div>
-    <h1>Ops! Essa página apagou a luz.</h1>
-    <p>O endereço que você tentou abrir não existe ou foi movido. Volte para o início e acenda seu negócio por lá.</p>
-    <div class="cta"><a class="btn btn-primary" href="#">Voltar para o início</a><a class="btn btn-ghost" href="https://wa.me/5583994054176?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20os%20sites.">Falar no WhatsApp</a></div>
-    <div class="quick"><a href="#planos">Planos</a><a href="#como-funciona">Como funciona</a><a href="#duvidas">Dúvidas</a></div>
-  </div>
-</section>
-</main>
-
-<footer>© 2026 NEOM. Todos os direitos reservados.</footer>
-<script>
-(function(){
-  var title=document.title;
-  function route(){
-    var h="";
-    try{h=decodeURIComponent(location.hash.slice(1))}catch(e){h=location.hash.slice(1)}
-    var bad=!!h&&(h==="erro-404"||!document.getElementById(h));
-    document.body.classList.toggle("is-404",bad);
-    document.title=bad?"Página não encontrada | NEOM":title;
-    if(bad)window.scrollTo(0,0);
-  }
-  addEventListener("hashchange",route);
-  route();
-})();
-</script>
+  </footer>
+  <script src="script.js"></script>
 </body>
 </html>

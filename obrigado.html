@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Obrigado! Vamos começar seu site — NEOM</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-in">
+      <a class="logo" href="index.html" aria-label="NEOM — início">NE<span>O</span>M</a>
+      <nav aria-label="Principal">
+        <a href="planos.html">Planos</a>
+        <a href="site-ideal.html">Site ideal</a>
+        <a href="duvidas.html">Dúvidas</a>
+      </nav>
+      <a class="btn btn-ghost btn-sm" href="index.html">Início</a>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="wrap form-grid">
+        <div>
+          <!-- Modo padrão: cliente chegou da Kiwify depois de pagar -->
+          <div data-modo="obrigado">
+            <div class="check" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M9 21 L17 29 L31 12"/></svg></div>
+            <span class="tag">Compra confirmada</span>
+            <h1 style="font-size:clamp(2rem,5vw,3.2rem);margin-bottom:16px">Obrigado! Agora vamos <span class="lime">construir seu site.</span></h1>
+            <p class="lead">Falta só um passo: preencha suas informações ao lado para a gente começar.</p>
+          </div>
+          <!-- Modo contato: cliente chegou pelo próprio site (?contato=...) -->
+          <div data-modo="contato" hidden>
+            <span class="tag">Contato</span>
+            <h1 style="font-size:clamp(2rem,5vw,3.2rem);margin-bottom:16px">Vamos falar sobre o <span class="lime">seu site.</span></h1>
+            <p class="lead">Preencha suas informações ao lado e fale direto com a gente pelo WhatsApp.</p>
+          </div>
+
+          <ol class="passos">
+            <li><strong>Preencha o formulário</strong>Conte o básico sobre você e seu negócio.</li>
+            <li><strong>Envie pelo WhatsApp</strong>Sua mensagem já sai pronta, é só confirmar o envio.</li>
+            <li><strong>A gente te responde</strong>Combinamos os detalhes e começamos a construção.</li>
+          </ol>
+        </div>
+
+        <form class="card" id="form-contato">
+          <div class="dupla">
+            <div class="campo">
+              <label for="nome">Seu nome</label>
+              <input id="nome" name="nome" type="text" autocomplete="name" placeholder="Como podemos te chamar?" required>
+            </div>
+            <div class="campo">
+              <label for="telefone">WhatsApp</label>
+              <input id="telefone" name="telefone" type="tel" autocomplete="tel" placeholder="(00) 00000-0000" required>
+            </div>
+          </div>
+          <div class="campo">
+            <label for="email">E-mail</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="voce@email.com" required>
+          </div>
+          <div class="dupla">
+            <div class="campo">
+              <label for="negocio">Nome do negócio</label>
+              <input id="negocio" name="negocio" type="text" autocomplete="organization" placeholder="Sua empresa ou marca" required>
+            </div>
+            <div class="campo">
+              <label for="plano">Plano</label>
+              <select id="plano" name="plano" required>
+                <option value="" disabled selected>Selecione</option>
+                <option>Landing Page</option>
+                <option>Site Institucional</option>
+                <option>Site de Catálogo</option>
+                <option>Ainda não sei</option>
+              </select>
+            </div>
+          </div>
+          <div class="campo">
+            <label for="mensagem">Conte um pouco sobre o seu projeto <span style="color:var(--muted);font-weight:400">(opcional)</span></label>
+            <textarea id="mensagem" name="mensagem" placeholder="O que seu negócio faz? O que você espera do site?"></textarea>
+          </div>
+          <button class="btn btn-lime btn-block" type="submit">Enviar pelo WhatsApp</button>
+          <p class="form-nota" id="form-nota" aria-live="polite">Seus dados são usados apenas para o contato sobre o seu site.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <a class="logo" href="index.html">NE<span>O</span>M</a>
+      <nav aria-label="Rodapé">
+        <a href="planos.html">Planos</a>
+        <a href="site-ideal.html">Site ideal</a>
+        <a href="duvidas.html">Dúvidas</a>
+      </nav>
+      <span>© 2026 NEOM. Todos os direitos reservados.</span>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
